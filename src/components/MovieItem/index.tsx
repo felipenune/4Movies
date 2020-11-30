@@ -1,9 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { ButtonHTMLAttributes } from 'react';
 import { FaStar } from 'react-icons/fa';
-import {
-  Container, InfoContainer, Rate, RateDiv, Title,
-} from './styles';
+import { Container, InfoContainer, Rate, RateDiv, Title } from './styles';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
@@ -12,7 +10,10 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const MovieItem: React.FC<Props> = ({
-  title, rate, poster, ...rest
+  title,
+  rate,
+  poster,
+  ...rest
 }: Props) => (
   <Container
     {...rest}

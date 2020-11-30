@@ -31,11 +31,11 @@ export const InfoContainer = styled.div`
 export const Name = styled.h1`
   font-size: 2rem;
   text-align: center;
-  color: #FFF;
+  color: #fff;
 `;
 
 export const CharName = styled.p`
   font-size: 1.5rem;
   text-align: center;
-  color: #FFF;
+  color: #fff;
 `;

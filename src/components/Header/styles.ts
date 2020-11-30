@@ -22,7 +22,7 @@ export const HeaderTitleDiv = styled.div`
 
 export const HeaderTitle = styled.h1`
   font-size: 4rem;
-  color:  #2ba690;
+  color: #2ba690;
 `;
 
 export const HeaderCredits = styled.img`

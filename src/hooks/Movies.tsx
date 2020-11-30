@@ -45,7 +45,7 @@ interface Movie {
   credits?: {
     cast: cast[];
     crew: crew[];
-  }
+  };
 }
 
 interface Props {
@@ -82,9 +82,7 @@ interface MovieData {
   setPageSearched(data: number): void;
 }
 
-const MovieContext = createContext<MovieData>(
-  {} as MovieData,
-);
+const MovieContext = createContext<MovieData>({} as MovieData);
 
 export const MoviesProvider: React.FC<Props> = ({ children }: Props) => {
   const [fetchedDataPop, setFetchedDataPop] = useState<Return>({
@@ -141,83 +139,68 @@ export const MoviesProvider: React.FC<Props> = ({ children }: Props) => {
 
   const api_key = '0be393ee8289641c2ecedc0121c59f94';
 
-  const getMoviesPop = useCallback(
-    async () => {
-      try {
-        if (pagePop === fetchedDataPop.page) {
-          setLoading(false);
-          return;
-        }
-
-        setLoading(true);
-
-        const response = await api
-          .get('/movie/popular', {
-            params: { page: pagePop, api_key },
-          });
-
-        setFetchedDataPop(response.data);
-        setMoviesPop((m) => [...m, ...response.data.results]);
+  const getMoviesPop = useCallback(async () => {
+    try {
+      if (pagePop === fetchedDataPop.page) {
         setLoading(false);
-      } catch (err) {
-        setLoading(false);
-        console.log(err);
+        return;
       }
-    },
-    [pagePop, fetchedDataPop.page],
-  );
 
-  const getMoviesTop = useCallback(
-    async () => {
-      try {
-        if (pageTop === fetchedDataTop.page) {
-          setLoading(false);
-          return;
-        }
+      setLoading(true);
 
-        setLoading(true);
+      const response = await api.get('/movie/popular', {
+        params: { page: pagePop, api_key },
+      });
 
-        const response = await api
-          .get('/movie/top_rated', {
-            params: { page: pageTop, api_key },
-          });
+      setFetchedDataPop(response.data);
+      setMoviesPop(m => [...m, ...response.data.results]);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+    }
+  }, [pagePop, fetchedDataPop.page]);
 
-        setFetchedDataTop(response.data);
-        setMoviesTop((m) => [...m, ...response.data.results]);
+  const getMoviesTop = useCallback(async () => {
+    try {
+      if (pageTop === fetchedDataTop.page) {
         setLoading(false);
-      } catch (err) {
-        setLoading(false);
-        console.log(err);
+        return;
       }
-    },
-    [pageTop, fetchedDataTop.page],
-  );
 
-  const getMoviesUp = useCallback(
-    async () => {
-      try {
-        if (pageUp === fetchedDataUp.page) {
-          setLoading(false);
-          return;
-        }
+      setLoading(true);
 
-        setLoading(true);
+      const response = await api.get('/movie/top_rated', {
+        params: { page: pageTop, api_key },
+      });
 
-        const response = await api
-          .get('/movie/upcoming', {
-            params: { page: pageUp, api_key },
-          });
+      setFetchedDataTop(response.data);
+      setMoviesTop(m => [...m, ...response.data.results]);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+    }
+  }, [pageTop, fetchedDataTop.page]);
 
-        setFetchedDataUp(response.data);
-        setMoviesUp((m) => [...m, ...response.data.results]);
+  const getMoviesUp = useCallback(async () => {
+    try {
+      if (pageUp === fetchedDataUp.page) {
         setLoading(false);
-      } catch (err) {
-        setLoading(false);
-        console.log(err);
+        return;
       }
-    },
-    [pageUp, fetchedDataUp.page],
-  );
+
+      setLoading(true);
+
+      const response = await api.get('/movie/upcoming', {
+        params: { page: pageUp, api_key },
+      });
+
+      setFetchedDataUp(response.data);
+      setMoviesUp(m => [...m, ...response.data.results]);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+    }
+  }, [pageUp, fetchedDataUp.page]);
 
   const searchMovies = useCallback(
     async (title: string) => {
@@ -229,56 +212,53 @@ export const MoviesProvider: React.FC<Props> = ({ children }: Props) => {
 
         setLoading(true);
 
-        const response = await api
-          .get('/search/movie', {
-            params: { page: pageSearched, api_key, query: title },
-          });
+        const response = await api.get('/search/movie', {
+          params: { page: pageSearched, api_key, query: title },
+        });
 
         if (pageSearched === 1) {
           setMoviesSearched(response.data.results);
         } else {
-          setMoviesSearched((m) => [...m, ...response.data.results]);
+          setMoviesSearched(m => [...m, ...response.data.results]);
         }
 
         setLoading(false);
       } catch (err) {
         setLoading(false);
-        console.log(err);
       }
     },
     [pageSearched],
   );
 
-  const getMovie = useCallback(
-    async (id: number) => {
-      try {
-        setLoading(true);
+  const getMovie = useCallback(async (id: number) => {
+    try {
+      setLoading(true);
 
-        const response = await api
-          .get(`/movie/${id}`, {
-            params: { api_key, append_to_response: 'credits' },
-          });
+      const response = await api.get(`/movie/${id}`, {
+        params: { api_key, append_to_response: 'credits' },
+      });
 
-        sessionStorage.setItem('Selected', JSON.stringify(response.data));
+      sessionStorage.setItem('Selected', JSON.stringify(response.data));
 
-        setMovieInfo(response.data);
-        const directorName = response.data.credits.crew.filter((crew_person: crew) => crew_person.job === 'Director');
-        setDirector(directorName[0].name);
-        setLoading(false);
-      } catch (err) {
-        setLoading(false);
-        console.log(err);
-      }
-    },
-    [],
-  );
+      setMovieInfo(response.data);
+      const directorName = response.data.credits.crew.filter(
+        (crew_person: crew) => crew_person.job === 'Director',
+      );
+      setDirector(directorName[0].name);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     let isMount = true;
     if (isMount) {
       sessionStorage.setItem('Popular', JSON.stringify(moviesPop));
     }
-    return function cleanUp() { isMount = false; };
+    return function cleanUp() {
+      isMount = false;
+    };
   }, [moviesPop]);
 
   useEffect(() => {
@@ -286,7 +266,9 @@ export const MoviesProvider: React.FC<Props> = ({ children }: Props) => {
     if (isMount) {
       sessionStorage.setItem('Top', JSON.stringify(moviesTop));
     }
-    return function cleanUp() { isMount = false; };
+    return function cleanUp() {
+      isMount = false;
+    };
   }, [moviesTop]);
 
   useEffect(() => {
@@ -294,7 +276,9 @@ export const MoviesProvider: React.FC<Props> = ({ children }: Props) => {
     if (isMount) {
       sessionStorage.setItem('Upcoming', JSON.stringify(moviesUp));
     }
-    return function cleanUp() { isMount = false; };
+    return function cleanUp() {
+      isMount = false;
+    };
   }, [moviesUp]);
 
   return (

@@ -1,8 +1,6 @@
 /* eslint-disable react/require-default-props */
 import React from 'react';
-import {
-  ActorPhoto, CharName, Container, InfoContainer, Name,
-} from './styles';
+import { ActorPhoto, CharName, Container, InfoContainer, Name } from './styles';
 
 interface Props {
   photo?: string;
@@ -12,7 +10,11 @@ interface Props {
 
 const CastItem: React.FC<Props> = ({ name, char, photo }: Props) => (
   <Container>
-    {photo && <ActorPhoto src={photo ? `http://image.tmdb.org/t/p/w780/${photo}` : ''} />}
+    {photo && (
+      <ActorPhoto
+        src={photo ? `http://image.tmdb.org/t/p/w780/${photo}` : ''}
+      />
+    )}
     <InfoContainer>
       <Name>{name}</Name>
 

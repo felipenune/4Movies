@@ -47,16 +47,12 @@ interface Cast {
   order: number;
 }
 
-const MovieInfo: React.FC<Props> = (state : Props) => {
+const MovieInfo: React.FC<Props> = (state: Props) => {
   const { id } = state.location.state;
 
   const history = useHistory();
 
-  const {
-    movieInfo,
-    director,
-    getMovie,
-  } = useMovies();
+  const { movieInfo, director, getMovie } = useMovies();
 
   // const selectedMovies = sessionStorage.getItem('Selected');
 
@@ -98,9 +94,12 @@ const MovieInfo: React.FC<Props> = (state : Props) => {
   useEffect(() => {
     let isMount = true;
     if (isMount) {
+      window.scrollTo({ top: 0 });
       getMovie(id);
     }
-    return function cleanUp() { isMount = false; };
+    return function cleanUp() {
+      isMount = false;
+    };
   }, [getMovie, id]);
 
   return (
@@ -110,17 +109,11 @@ const MovieInfo: React.FC<Props> = (state : Props) => {
       </BackButton>
       <Header cover={movieInfo.backdrop_path}>
         <CategoryContainer>
-          <ButtonCategory
-            disabled={overview}
-            onClick={handleOverview}
-          >
+          <ButtonCategory disabled={overview} onClick={handleOverview}>
             Overview
           </ButtonCategory>
 
-          <ButtonCategory
-            disabled={cast}
-            onClick={handleCast}
-          >
+          <ButtonCategory disabled={cast} onClick={handleCast}>
             Cast
           </ButtonCategory>
         </CategoryContainer>
@@ -128,7 +121,10 @@ const MovieInfo: React.FC<Props> = (state : Props) => {
       {overview ? (
         <Card>
           <Poster
-            src={movieInfo.poster_path && `http://image.tmdb.org/t/p/w780/${movieInfo.poster_path}`}
+            src={
+              movieInfo.poster_path &&
+              `http://image.tmdb.org/t/p/w780/${movieInfo.poster_path}`
+            }
           />
 
           <OverviewDiv>
@@ -142,7 +138,11 @@ const MovieInfo: React.FC<Props> = (state : Props) => {
               <CollumInfosDiv>
                 <SubTitle>Rating:</SubTitle>
                 <InfoText>
-                  <FaStar size="3rem" color="#ffcd13" style={{ marginRight: '5%' }} />
+                  <FaStar
+                    size="3rem"
+                    color="#ffcd13"
+                    style={{ marginRight: '5%' }}
+                  />
                   {`${movieInfo.vote_average}/`}
                   <SmallText>10</SmallText>
                 </InfoText>
@@ -156,13 +156,17 @@ const MovieInfo: React.FC<Props> = (state : Props) => {
               <CollumInfosDiv>
                 <SubTitle>Running time:</SubTitle>
                 <InfoText>
-                  {movieInfo.runtime ? convertToHour(movieInfo.runtime) : '-- : --'}
+                  {movieInfo.runtime
+                    ? convertToHour(movieInfo.runtime)
+                    : '-- : --'}
                 </InfoText>
               </CollumInfosDiv>
 
               <CollumInfosDiv>
                 <SubTitle>Release date:</SubTitle>
-                <InfoText>{moment(movieInfo.release_date).format('MM/DD/YYYY')}</InfoText>
+                <InfoText>
+                  {moment(movieInfo.release_date).format('MM/DD/YYYY')}
+                </InfoText>
               </CollumInfosDiv>
             </SubInfosDiv>
           </OverviewDiv>
@@ -179,9 +183,9 @@ const MovieInfo: React.FC<Props> = (state : Props) => {
           ))}
 
           {showScroll && (
-          <UpButton onClick={scrollTop}>
-            <FaArrowUp size="4rem" />
-          </UpButton>
+            <UpButton onClick={scrollTop}>
+              <FaArrowUp size="4rem" />
+            </UpButton>
           )}
         </CastContainer>
       )}

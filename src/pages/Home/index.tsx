@@ -125,7 +125,9 @@ const Home: React.FC = () => {
     if (isMount) {
       getMoviesPop();
     }
-    return function cleanUp() { isMount = false; };
+    return function cleanUp() {
+      isMount = false;
+    };
   }, [getMoviesPop]);
 
   useEffect(() => {
@@ -133,7 +135,9 @@ const Home: React.FC = () => {
     if (isMount) {
       getMoviesTop();
     }
-    return function cleanUp() { isMount = false; };
+    return function cleanUp() {
+      isMount = false;
+    };
   }, [getMoviesTop]);
 
   useEffect(() => {
@@ -141,7 +145,9 @@ const Home: React.FC = () => {
     if (isMount) {
       getMoviesUp();
     }
-    return function cleanUp() { isMount = false; };
+    return function cleanUp() {
+      isMount = false;
+    };
   }, [getMoviesUp]);
 
   useEffect(() => {
@@ -153,7 +159,9 @@ const Home: React.FC = () => {
         setSearch(false);
       }
     }
-    return function cleanUp() { isMount = false; };
+    return function cleanUp() {
+      isMount = false;
+    };
   }, [title, searchMovies]);
 
   useEffect(() => {
@@ -163,7 +171,9 @@ const Home: React.FC = () => {
         setTitle('');
       }
     }
-    return function cleanUp() { isMount = false; };
+    return function cleanUp() {
+      isMount = false;
+    };
   }, [search]);
 
   return (
@@ -174,7 +184,7 @@ const Home: React.FC = () => {
             <Input
               placeholder="Search Title"
               value={title}
-              onChange={(e) => handleSearch(e.target.value)}
+              onChange={e => handleSearch(e.target.value)}
             />
 
             <SearchIconDiv>
@@ -184,73 +194,68 @@ const Home: React.FC = () => {
         </SearchContainer>
 
         <CategoryContainer>
-          <ButtonCategory
-            disabled={popular}
-            onClick={handleCategoryPop}
-          >
+          <ButtonCategory disabled={popular} onClick={handleCategoryPop}>
             Popular
           </ButtonCategory>
 
-          <ButtonCategory
-            disabled={top}
-            onClick={handleCategoryTop}
-          >
+          <ButtonCategory disabled={top} onClick={handleCategoryTop}>
             Top Rated
           </ButtonCategory>
 
-          <ButtonCategory
-            disabled={upcoming}
-            onClick={handleCategoryComing}
-          >
+          <ButtonCategory disabled={upcoming} onClick={handleCategoryComing}>
             Upcoming
           </ButtonCategory>
         </CategoryContainer>
       </Header>
 
       <MoviesContainer>
-        {popular && moviesPop.map((movie) => (
-          <MovieItem
-            key={movie.id}
-            title={movie.title}
-            rate={movie.vote_average}
-            poster={movie.poster_path}
-            disabled={loading}
-            onClick={() => handleGoToInfo(movie.id)}
-          />
-        ))}
+        {popular &&
+          moviesPop.map(movie => (
+            <MovieItem
+              key={movie.id}
+              title={movie.title}
+              rate={movie.vote_average}
+              poster={movie.poster_path}
+              disabled={loading}
+              onClick={() => handleGoToInfo(movie.id)}
+            />
+          ))}
 
-        {top && moviesTop.map((movie) => (
-          <MovieItem
-            key={movie.id}
-            title={movie.title}
-            rate={movie.vote_average}
-            poster={movie.poster_path}
-            disabled={loading}
-            onClick={() => handleGoToInfo(movie.id)}
-          />
-        ))}
+        {top &&
+          moviesTop.map(movie => (
+            <MovieItem
+              key={movie.id}
+              title={movie.title}
+              rate={movie.vote_average}
+              poster={movie.poster_path}
+              disabled={loading}
+              onClick={() => handleGoToInfo(movie.id)}
+            />
+          ))}
 
-        {upcoming && moviesUp.map((movie) => (
-          <MovieItem
-            key={movie.id}
-            title={movie.title}
-            rate={movie.vote_average}
-            poster={movie.poster_path}
-            disabled={loading}
-            onClick={() => handleGoToInfo(movie.id)}
-          />
-        ))}
+        {upcoming &&
+          moviesUp.map(movie => (
+            <MovieItem
+              key={movie.id}
+              title={movie.title}
+              rate={movie.vote_average}
+              poster={movie.poster_path}
+              disabled={loading}
+              onClick={() => handleGoToInfo(movie.id)}
+            />
+          ))}
 
-        {search && moviesSearched.map((movie) => (
-          <MovieItem
-            key={movie.id}
-            title={movie.title}
-            rate={movie.vote_average}
-            poster={movie.poster_path}
-            disabled={loading}
-            onClick={() => handleGoToInfo(movie.id)}
-          />
-        ))}
+        {search &&
+          moviesSearched.map(movie => (
+            <MovieItem
+              key={movie.id}
+              title={movie.title}
+              rate={movie.vote_average}
+              poster={movie.poster_path}
+              disabled={loading}
+              onClick={() => handleGoToInfo(movie.id)}
+            />
+          ))}
       </MoviesContainer>
 
       {loading ? (

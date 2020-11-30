@@ -33,9 +33,10 @@ export const InfoContainer = styled.div`
 
 export const Title = styled.h1`
   font-size: 2.2rem;
-  color: #FFF;
+  color: #fff;
   text-align: left;
-  text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+  text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000,
+    1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
 `;
 
 export const RateDiv = styled.div`
@@ -45,7 +46,8 @@ export const RateDiv = styled.div`
 
 export const Rate = styled.p`
   font-size: 2.2rem;
-  color: #FFF;
+  color: #fff;
   margin-left: 6%;
-  text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+  text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000,
+    1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
 `;
